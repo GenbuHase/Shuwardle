@@ -1,0 +1,48 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Tokyo
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
+        with:
+          ref: main
+      - name: Setup Node
+        uses: actions/setup-node@v2.5.1
+        with:
+          node-version: 16
+      - name: Cache deps
+        uses: actions/cache@v2.1.7
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('./package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      - name: Install deps
+        run: npm ci
+      - name: Get Repo name
+        id: get-repo-name
+        run: |
+          REPO=$(echo ${{ github.repository }} | sed -e "s#.*/##")
+          echo $REPO
+          echo ::set-output name=repo_name::$REPO
+      - name: Build
+        run: npm run build
+        env:
+          PUBLIC_URL: /${{ steps.get-repo-name.outputs.repo_name }}
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          publish_branch: deploy
