@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Shuwardle/static/css/main.279ee824.css",
+    "main.js": "/Shuwardle/static/js/main.6056e091.js",
+    "static/js/787.3402dbbd.chunk.js": "/Shuwardle/static/js/787.3402dbbd.chunk.js",
+    "index.html": "/Shuwardle/index.html",
+    "main.279ee824.css.map": "/Shuwardle/static/css/main.279ee824.css.map",
+    "main.6056e091.js.map": "/Shuwardle/static/js/main.6056e091.js.map",
+    "787.3402dbbd.chunk.js.map": "/Shuwardle/static/js/787.3402dbbd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.279ee824.css",
+    "static/js/main.6056e091.js"
+  ]
+}
